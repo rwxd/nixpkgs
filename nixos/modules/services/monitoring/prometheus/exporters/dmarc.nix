@@ -12,7 +12,7 @@ let
 
   json = builtins.toJSON {
     inherit (cfg) folders port;
-    listen_addr = cfg.listenAddress;
+    listen_addr = lib.removePrefix "[" (lib.removeSuffix "]" cfg.listenAddress);
     storage_path = "$STATE_DIRECTORY";
     imap = (removeAttrs cfg.imap [ "passwordFile" ]) // {
       password = "$IMAP_PASSWORD";
